@@ -34,4 +34,4 @@ This project uses a 38.5-hour workweek rule, which equals 7.7 hours per day in a
 
 ---
 
-Developed for the team at Storyblok.
+Developed by the tech support manager.
