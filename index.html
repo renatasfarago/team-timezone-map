@@ -268,9 +268,24 @@
         for (let h = 0; h < 24; h++) {
           const cell = document.createElement('td');
 
-          const isWorking = (member.start <= member.end)
-            ? (h >= member.start && h < member.end)
-            : (h >= member.start || h < member.end);
+          // Converter horários de Portugal (GMT+1) para GMT
+          const startGMT = member.start - 1;
+          const endGMT = member.end - 1;
+
+          // Converter hora GMT atual para hora local
+          const localHourFloat = h + member.offset;
+          const normalizedLocal = ((localHourFloat % 24) + 24) % 24;
+
+          // Verificar se está trabalhando (comparar a hora local com horário de trabalho em hora local)
+          const startLocal = startGMT + member.offset;
+          const endLocal = endGMT + member.offset;
+
+          let isWorking = false;
+          if (startLocal <= endLocal) {
+            isWorking = normalizedLocal >= startLocal && normalizedLocal < endLocal;
+          } else {
+            isWorking = normalizedLocal >= startLocal || normalizedLocal < endLocal;
+          }
 
           if (isWorking) {
             cell.classList.add('working');
@@ -278,10 +293,9 @@
             cell.classList.add('not-working');
           }
 
-          // Calcular hora local
-          const localHour = (h + member.offset) % 24;
-          const displayHour = Math.floor(localHour);
-          const displayMin = Math.round((localHour - displayHour) * 60);
+          // Calcular hora local para exibição
+          const displayHour = Math.floor(normalizedLocal);
+          const displayMin = Math.round((normalizedLocal - displayHour) * 60);
           cell.textContent = `${displayHour.toString().padStart(2, '0')}:${displayMin.toString().padStart(2, '0')}`;
           cell.style.fontSize = '11px';
 
