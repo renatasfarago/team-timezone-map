@@ -497,8 +497,8 @@
         nameCell.onclick = () => openModal(idx);
         row.appendChild(nameCell);
 
-        const lunchBoundary = Number.isFinite(member.start) ? normalizeHour(startLocal + 4) : null;
-        const lunchHour = lunchBoundary !== null ? Math.floor(lunchBoundary) : null;
+        const lunchStart = Number.isFinite(member.start) ? normalizeHour(startLocal + 4) : null;
+        const lunchHour = lunchStart !== null ? Math.floor(lunchStart) : null;
 
         for (let h = 0; h < 24; h++) {
           const cell = document.createElement('td');
@@ -507,7 +507,7 @@
           const overlap = getHourOverlap({ start: startLocal, end: endLocal }, localHour);
           const isWorking = overlap > 0;
           const fillPct = Math.min(100, Math.max(0, overlap * 100));
-          const isLunch = lunchHour === localHour && isWorking;
+          const isLunch = lunchHour !== null && Math.floor(localHour) === lunchHour && isWorking;
 
           if (isLunch) {
             cell.classList.add('lunch');
