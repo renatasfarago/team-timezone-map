@@ -7,89 +7,216 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f5f5;
-      padding: 2rem 1rem;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top left, rgba(99, 102, 241, 0.18), transparent 30%),
+                  linear-gradient(180deg, #0b1543 0%, #1d2b64 45%, #e7efff 100%);
+      color: #111827;
+      min-height: 100vh;
+      padding: 2rem 1rem 3rem;
     }
     .container {
       max-width: 1600px;
       margin: 0 auto;
     }
     h1 {
-      text-align: center;
-      margin-bottom: 2rem;
-      color: #333;
-      font-size: 24px;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+      font-size: clamp(2rem, 2.5vw, 3rem);
+      line-height: 1.05;
+    }
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero p {
+      max-width: 760px;
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #ffffff
+    }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      font-size: 0.95rem;
+      color: rgba(17, 24, 39, 0.72);
+    }
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 0.95rem;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 999px;
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+    }
+    .legend strong {
+      width: 0.75rem;
+      height: 0.75rem;
+      display: inline-block;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .legend .current-indicator strong {
+      background: #a855f7;
+    }
+    .legend .working-indicator strong {
+      background: #10b981;
+    }
+    .legend .off-indicator strong {
+      background: #d1d5db;
+    }
+    .legend .lunch-indicator strong {
+      background: #f59e0b;
     }
     .table-wrapper {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      overflow-y: hidden;
+      background: rgba(255,255,255,0.96);
+      border-radius: 28px;
+      box-shadow: 0 40px 100px rgba(15, 23, 42, 0.12);
       overflow-x: auto;
+      overflow-y: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      backdrop-filter: blur(14px);
     }
     .table-wrapper::-webkit-scrollbar {
-      height: 12px;
+      height: 10px;
     }
     .table-wrapper::-webkit-scrollbar-track {
-      background: #f0f0f0;
+      background: rgba(229, 231, 235, 0.45);
+      border-radius: 999px;
     }
     .table-wrapper::-webkit-scrollbar-thumb {
-      background: #667eea;
-      border-radius: 6px;
+      background: rgba(99, 102, 241, 0.8);
+      border-radius: 999px;
     }
     .table-wrapper::-webkit-scrollbar-thumb:hover {
-      background: #5568d3;
+      background: rgba(79, 70, 229, 0.9);
     }
     table {
       width: 100%;
       border-collapse: collapse;
+      min-width: 1120px;
     }
     th, td {
-      padding: 12px 8px;
+      padding: 14px 12px;
       text-align: center;
-      border: 1px solid #e0e0e0;
-      font-size: 12px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      font-size: 0.92rem;
+      transition: background 0.2s ease;
     }
     th {
-      background: #667eea;
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.92), rgba(79, 70, 229, 0.95));
       color: white;
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-transform: uppercase;
+      font-size: 0.84rem;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 11;
     }
     th:first-child {
       position: sticky;
       left: 0;
-      z-index: 11;
-      background: #667eea;
+      z-index: 13;
+      background: linear-gradient(180deg, rgba(79, 70, 229, 0.98), rgba(99, 102, 241, 0.98));
+    }
+    th.current-hour {
+      background: #7c3aed;
     }
     td:first-child {
       position: sticky;
       left: 0;
-      background: #f9f9f9;
-      font-weight: 600;
+      background: rgba(255,255,255,0.98);
+      font-weight: 700;
       text-align: left;
-      min-width: 180px;
+      min-width: 240px;
+      max-width: 320px;
+      padding-right: 18px;
+      border-right: 1px solid rgba(148, 163, 184, 0.16);
       cursor: pointer;
       user-select: none;
-      z-index: 1;
+      z-index: 14;
+      box-shadow: inset -6px 0 8px -6px rgba(15, 23, 42, 0.08);
     }
     td:first-child:hover {
-      background: #f0f0f0;
+      background: rgba(249, 250, 251, 0.96);
+    }
+    .member-name {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.2rem;
+      color: #111827;
+    }
+    .member-subtitle {
+      display: block;
+      font-size: 0.8rem;
+      color: #6b7280;
+      font-weight: 500;
     }
     .working {
-      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-      color: white;
-      font-weight: 600;
+      position: relative;
+      overflow: hidden;
+      color: #0f172a;
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .working::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: var(--fill, 100%);
+      background: linear-gradient(to right, rgba(164, 243, 235, 0.92), rgba(16, 185, 129, 0.78));
+      z-index: 0;
+    }
+    .working.partial-start::before {
+      left: auto;
+      right: 0;
+      background: linear-gradient(to right, rgba(167, 243, 208, 0.95), rgba(16, 185, 129, 0.95));
+      transform-origin: right;
+    }
+    .working.partial-end::before {
+      left: 0;
+      right: auto;
+      background: linear-gradient(to right, rgba(16, 185, 129, 0.95), rgba(167, 243, 208, 0.95));
+      transform-origin: left;
+    }
+    .working .cell-content {
+      position: relative;
+      z-index: 1;
+    }
+    .lunch {
+      position: relative;
+      color: #92400e;
+      background: linear-gradient(135deg, rgba(253, 186, 116, 0.35), rgba(251, 191, 36, 0.18));
+      font-weight: 700;
+    }
+    .lunch .cell-content {
+      position: relative;
+      z-index: 1;
     }
     .not-working {
-      background: #fafafa;
-      color: #999;
+      background: rgba(248, 250, 252, 0.88);
+      color: #9ca3af;
     }
-    tr:nth-child(even) td:not(:first-child):not(.working) {
-      background: #ffffff;
+    .current-hour {
+      box-shadow: inset 3px 0 0 0 rgba(168, 85, 247, 0.95);
+    }
+    tr:hover td:not(.lunch) {
+      background: rgba(15, 23, 42, 0.03);
+    }
+    tr:hover td:first-child {
+      background: rgba(255,255,255,0.98);
+    }
+    td.lunch:hover {
+      background: linear-gradient(135deg, rgba(253, 186, 116, 0.35), rgba(251, 191, 36, 0.18));
     }
     .modal {
       display: none;
@@ -98,21 +225,22 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(15, 23, 42, 0.5);
       z-index: 1000;
       align-items: center;
       justify-content: center;
+      padding: 1rem;
     }
     .modal.active {
       display: flex;
     }
     .modal-content {
       background: white;
-      border-radius: 8px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border-radius: 24px;
+      padding: 2.25rem;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.18);
       position: relative;
     }
     .close-btn {
@@ -123,36 +251,37 @@
       border: none;
       font-size: 24px;
       cursor: pointer;
-      color: #999;
+      color: #6b7280;
     }
     .close-btn:hover {
-      color: #333;
+      color: #111827;
     }
     .modal-content h2 {
       margin-bottom: 1.5rem;
-      color: #333;
+      color: #111827;
+      font-size: 1.4rem;
     }
     .form-group {
       margin-bottom: 1.5rem;
     }
     .form-group label {
       display: block;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 0.9rem;
+      font-weight: 700;
       margin-bottom: 0.5rem;
-      color: #333;
+      color: #111827;
     }
     .form-group input {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 14px;
+      padding: 0.85rem 1rem;
+      border: 1px solid #d1d5db;
+      border-radius: 14px;
+      font-size: 0.95rem;
     }
     .form-group input:focus {
       outline: none;
-      border-color: #667eea;
-      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      border-color: #6366f1;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
     }
     .button-group {
       display: flex;
@@ -161,33 +290,48 @@
     }
     button {
       flex: 1;
-      padding: 0.75rem;
+      padding: 0.85rem 1rem;
       border: none;
-      border-radius: 6px;
-      font-size: 14px;
-      font-weight: 600;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 700;
       cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    button:hover {
+      transform: translateY(-1px);
     }
     .btn-primary {
-      background: #667eea;
+      background: #6366f1;
       color: white;
+      box-shadow: 0 18px 40px rgba(99, 102, 241, 0.18);
     }
     .btn-primary:hover {
-      background: #5568d3;
+      background: #4f46e5;
     }
     .btn-secondary {
-      background: #f0f0f0;
-      color: #333;
+      background: #f3f4f6;
+      color: #111827;
     }
     .btn-secondary:hover {
-      background: #e0e0e0;
+      background: #e5e7eb;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🌍 Team Timezone Map</h1>
-
+    <div class="hero">
+      <div>
+        <h1>🌍 Team Timezone Map</h1>
+        <p>See your team’s time zones in a clean, modern schedule view. Each row shows a member’s local hours and work window, with the current UTC column highlighted.</p>
+      </div>
+      <div class="legend">
+        <span class="working-indicator"><strong></strong> Working hours</span>
+        <span class="off-indicator"><strong></strong> Out of work</span>
+        <span class="lunch-indicator"><strong></strong> Lunch break</span>
+        <span class="current-indicator"><strong></strong> Current time (UTC)</span>
+      </div>
+    </div>
     <div class="table-wrapper">
       <table id="table"></table>
     </div>
@@ -196,40 +340,91 @@
   <div class="modal" id="modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal()">&times;</button>
-      <h2>Editar <span id="modalName"></span></h2>
+      <h2>Edit <span id="modalName"></span></h2>
 
       <div class="form-group">
-        <label>Início (hora em Portugal)</label>
+        <label>Start time (UTC)</label>
         <input type="number" id="editStart" step="0.01">
       </div>
 
       <div class="form-group">
-        <label>Fim (hora em Portugal)</label>
+        <label>End time (UTC)</label>
         <input type="number" id="editEnd" step="0.01">
       </div>
 
       <div class="button-group">
-        <button class="btn-primary" onclick="saveEdit()">Salvar</button>
-        <button class="btn-secondary" onclick="closeModal()">Cancelar</button>
+        <button class="btn-primary" onclick="saveEdit()">Save</button>
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
       </div>
     </div>
   </div>
 
   <script>
+    const WORK_DAY_HOURS = 7.7;
+    const LUNCH_HOUR = 1;
+    const TOTAL_DAY_HOURS = WORK_DAY_HOURS + LUNCH_HOUR;
+
     const data = [
-      { name: 'Mitali', offset: 4.5, start: 3, end: 11.5 },
-      { name: 'Ranjana', offset: 4.5, start: 3 + 41/60, end: 12 + 10/60 },
-      { name: 'Aleksandar', offset: 2, start: 6, end: 14 },
-      { name: 'Renata', offset: 1, start: 9, end: 18 },
-      { name: 'Juan', offset: -4, start: 11 + 10/60, end: 19 + 10/60 },
-      { name: 'Hannes', offset: -4, start: 12, end: 20 },
-      { name: 'João', offset: -4, start: 15, end: 23 },
-      { name: 'Marco', offset: -6, start: 15, end: 24 },
-      { name: 'Everton', offset: -4, start: 18, end: 27 }
+      { name: 'Mitali', offset: 4.5, start: 3, end: 3 + TOTAL_DAY_HOURS },
+      { name: 'Ranjana', offset: 4.5, start: 3 + 41/60, end: 3 + 41/60 + TOTAL_DAY_HOURS },
+      { name: 'Aleksandar', offset: 2, start: 5, end: 5 + TOTAL_DAY_HOURS },
+      { name: 'Renata', offset: 1, start: 8, end: 8 + TOTAL_DAY_HOURS },
+      { name: 'Juan', offset: -4, start: 11 + 10/60, end: 11 + 10/60 + TOTAL_DAY_HOURS },
+      { name: 'Hannes', offset: -4, start: 12, end: 12 + TOTAL_DAY_HOURS },
+      { name: 'João', offset: -4, start: 15, end: 15 + TOTAL_DAY_HOURS },
+      { name: 'Marco', offset: -6, start: 15, end: 15 + TOTAL_DAY_HOURS },
+      { name: 'Everton', offset: -4, start: 18, end: 18 + TOTAL_DAY_HOURS }
     ];
 
-    let teamData = JSON.parse(localStorage.getItem('teamSchedule')) || data;
+    const STORAGE_KEY = 'teamSchedule';
+    const STORAGE_VERSION = 3;
+
+    function loadTeamData() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return data;
+        const parsed = JSON.parse(raw);
+        if (!parsed || parsed.version !== STORAGE_VERSION || !Array.isArray(parsed.members)) {
+          return data;
+        }
+        return parsed.members;
+      } catch (error) {
+        return data;
+      }
+    }
+
+    function saveTeamData() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: STORAGE_VERSION, members: teamData }));
+    }
+
+    let teamData = loadTeamData();
     let editingIndex = -1;
+
+    function normalizeHour(hour) {
+      return ((hour % 24) + 24) % 24;
+    }
+
+    function formatHour(hour) {
+      const normalized = normalizeHour(hour);
+      const totalMinutes = Math.round((normalized % 1) * 60) + Math.floor(normalized) * 60;
+      const fixedMinutes = ((totalMinutes % 1440) + 1440) % 1440;
+      const displayHour = Math.floor(fixedMinutes / 60);
+      const displayMinutes = fixedMinutes % 60;
+      return `${displayHour.toString().padStart(2, '0')}:${displayMinutes.toString().padStart(2, '0')}`;
+    }
+
+    function getHourOverlap(member, hour) {
+      const slotStart = hour;
+      const slotEnd = hour + 1;
+
+      if (member.start <= member.end) {
+        return Math.max(0, Math.min(slotEnd, member.end) - Math.max(slotStart, member.start));
+      }
+
+      const firstPart = Math.max(0, Math.min(slotEnd, 24) - Math.max(slotStart, member.start));
+      const secondPart = Math.max(0, Math.min(slotEnd, member.end) - Math.max(slotStart, 0));
+      return firstPart + secondPart;
+    }
 
     function render() {
       const table = document.getElementById('table');
@@ -238,13 +433,14 @@
       // Header
       const headerRow = document.createElement('tr');
       const headerName = document.createElement('th');
-      headerName.textContent = 'Membro';
+      headerName.textContent = 'Member';
       headerRow.appendChild(headerName);
+      const currentUtcHour = new Date().getUTCHours();
 
       for (let h = 0; h < 24; h++) {
         const th = document.createElement('th');
         th.textContent = h.toString().padStart(2, '0');
-        th.style.minWidth = '40px';
+        if (h === currentUtcHour) th.classList.add('current-hour');
         headerRow.appendChild(th);
       }
       table.appendChild(headerRow);
@@ -254,50 +450,54 @@
         const row = document.createElement('tr');
 
         const nameCell = document.createElement('td');
-        const startH = Math.floor(member.start);
-        const startM = Math.round((member.start - startH) * 60);
-        const endH = Math.floor(member.end);
-        const endM = Math.round((member.end - endH) * 60);
-        const startStr = `${startH.toString().padStart(2, '0')}:${startM.toString().padStart(2, '0')}`;
-        const endStr = `${endH.toString().padStart(2, '0')}:${endM.toString().padStart(2, '0')}`;
+        const startLocal = normalizeHour(member.start + member.offset);
+        const endLocal = normalizeHour(member.end + member.offset);
+        const startStr = formatHour(startLocal);
+        const endStr = formatHour(endLocal);
+        const offsetSign = member.offset >= 0 ? `+${member.offset}` : member.offset;
 
-        nameCell.innerHTML = `<strong>${member.name}</strong><br><span style="font-size: 11px; color: #666; font-weight: 400;">${startStr} - ${endStr}</span>`;
+        nameCell.innerHTML = `
+          <span class="member-name">${member.name}</span>
+          <span class="member-subtitle">UTC${offsetSign} · ${startStr} – ${endStr}</span>
+        `;
         nameCell.onclick = () => openModal(idx);
         row.appendChild(nameCell);
 
+        const lunchBoundary = Number.isFinite(member.start) ? normalizeHour(startLocal + 4) : null;
+        const lunchHour = lunchBoundary !== null ? Math.floor(lunchBoundary) : null;
+
         for (let h = 0; h < 24; h++) {
           const cell = document.createElement('td');
+          const localHour = normalizeHour(h + member.offset);
+          const overlap = getHourOverlap({ start: startLocal, end: endLocal }, localHour);
+          const isWorking = overlap > 0;
+          const fillPct = Math.min(100, Math.max(0, overlap * 100));
+          const isLunch = lunchHour === localHour && isWorking;
 
-          // Converter horários de Portugal (GMT+1) para GMT
-          const startGMT = member.start - 1;
-          const endGMT = member.end - 1;
-
-          // Converter hora GMT atual para hora local
-          const localHourFloat = h + member.offset;
-          const normalizedLocal = ((localHourFloat % 24) + 24) % 24;
-
-          // Verificar se está trabalhando (comparar a hora local com horário de trabalho em hora local)
-          const startLocal = startGMT + member.offset;
-          const endLocal = endGMT + member.offset;
-
-          let isWorking = false;
-          if (startLocal <= endLocal) {
-            isWorking = normalizedLocal >= startLocal && normalizedLocal < endLocal;
-          } else {
-            isWorking = normalizedLocal >= startLocal || normalizedLocal < endLocal;
-          }
-
-          if (isWorking) {
+          if (isLunch) {
+            cell.classList.add('lunch');
+            cell.setAttribute('title', 'Lunch break');
+          } else if (isWorking) {
             cell.classList.add('working');
+            cell.style.setProperty('--fill', `${fillPct}%`);
+
+            const startBoundary = Number.isFinite(startLocal) && startLocal % 1 !== 0 && Math.floor(startLocal) === localHour;
+            const endBoundary = Number.isFinite(endLocal) && endLocal % 1 !== 0 && Math.floor(endLocal) === localHour;
+            if (startBoundary && !endBoundary) {
+              cell.classList.add('partial-start');
+            } else if (endBoundary && !startBoundary) {
+              cell.classList.add('partial-end');
+            }
           } else {
             cell.classList.add('not-working');
           }
 
-          // Calcular hora local para exibição
-          const displayHour = Math.floor(normalizedLocal);
-          const displayMin = Math.round((normalizedLocal - displayHour) * 60);
-          cell.textContent = `${displayHour.toString().padStart(2, '0')}:${displayMin.toString().padStart(2, '0')}`;
-          cell.style.fontSize = '11px';
+          const displayHour = formatHour(localHour);
+          const content = document.createElement('span');
+          content.className = 'cell-content';
+          content.textContent = isLunch ? '🍴' : displayHour;
+          cell.appendChild(content);
+          cell.style.fontSize = isLunch ? '1rem' : '11px';
 
           row.appendChild(cell);
         }
@@ -305,7 +505,7 @@
         table.appendChild(row);
       });
 
-      localStorage.setItem('teamSchedule', JSON.stringify(teamData));
+      saveTeamData();
     }
 
     function openModal(idx) {
@@ -323,8 +523,14 @@
 
     function saveEdit() {
       const member = teamData[editingIndex];
-      member.start = parseFloat(document.getElementById('editStart').value);
-      member.end = parseFloat(document.getElementById('editEnd').value);
+      const startValue = parseFloat(document.getElementById('editStart').value);
+      const endValue = parseFloat(document.getElementById('editEnd').value);
+      if (isNaN(startValue) || isNaN(endValue)) {
+        alert('Please enter valid times.');
+        return;
+      }
+      member.start = startValue;
+      member.end = endValue;
       render();
       closeModal();
     }
