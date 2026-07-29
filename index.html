@@ -218,6 +218,15 @@
     td.lunch:hover {
       background: linear-gradient(135deg, rgba(253, 186, 116, 0.35), rgba(251, 191, 36, 0.18));
     }
+    th.column-hover,
+    td.column-hover {
+      background: rgba(99, 102, 241, 0.16) !important;
+    }
+    th.column-selected,
+    td.column-selected {
+      background: rgba(99, 102, 241, 0.24) !important;
+      color: #111827;
+    }
     .modal {
       display: none;
       position: fixed;
@@ -426,6 +435,27 @@
       return firstPart + secondPart;
     }
 
+    let selectedColumn = null;
+
+    function clearColumnHover() {
+      document.querySelectorAll('#table .column-hover').forEach(cell => cell.classList.remove('column-hover'));
+    }
+
+    function setColumnHover(index) {
+      clearColumnHover();
+      document.querySelectorAll(`#table [data-col='${index}']`).forEach(cell => cell.classList.add('column-hover'));
+    }
+
+    function clearColumnSelected() {
+      document.querySelectorAll('#table .column-selected').forEach(cell => cell.classList.remove('column-selected'));
+    }
+
+    function setColumnSelected(index) {
+      selectedColumn = index;
+      clearColumnSelected();
+      document.querySelectorAll(`#table [data-col='${index}']`).forEach(cell => cell.classList.add('column-selected'));
+    }
+
     function render() {
       const table = document.getElementById('table');
       table.innerHTML = '';
@@ -440,7 +470,11 @@
       for (let h = 0; h < 24; h++) {
         const th = document.createElement('th');
         th.textContent = h.toString().padStart(2, '0');
+        th.dataset.col = h;
         if (h === currentUtcHour) th.classList.add('current-hour');
+        th.addEventListener('mouseenter', () => setColumnHover(h));
+        th.addEventListener('mouseleave', clearColumnHover);
+        th.addEventListener('click', () => setColumnSelected(h));
         headerRow.appendChild(th);
       }
       table.appendChild(headerRow);
@@ -501,6 +535,10 @@
           content.textContent = isLunch ? '🍴' : displayHour;
           cell.appendChild(content);
           cell.style.fontSize = isLunch ? '1rem' : '11px';
+          cell.dataset.col = h;
+          cell.addEventListener('mouseenter', () => setColumnHover(h));
+          cell.addEventListener('mouseleave', clearColumnHover);
+          cell.addEventListener('click', () => setColumnSelected(h));
 
           row.appendChild(cell);
         }
