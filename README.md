@@ -41,14 +41,14 @@ Luca, Fede, Cesar, and Marci.
 
 ## Working Hours
 
-Each team member works 7 hours and 40 minutes per day, plus a one-hour lunch break. The schedule therefore displays an 8-hour-and-40-minute total work window, with lunch marked in orange.
+Each team member's schedule displays a 7-hour-and-40-minute work window, with lunch marked in orange.
 
 The current local schedules include:
 
-- Luca: 05:00-13:40 (Ireland, UTC+1)
+- Luca: 04:00-11:40 (Ireland, UTC+1)
 - Fede: 08:10-16:50 (Argentina, UTC-4)
 - Cesar: 07:00-15:40 (Costa Rica, UTC-6)
-- Marci: 10:00-18:40 (Costa Rica, UTC-6)
+- Marci: 09:00-16:40 (Costa Rica, UTC-6)
 
 ## Daylight Saving Time
 

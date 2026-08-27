@@ -439,39 +439,38 @@
   <script>
     const WORK_DAY_HOURS = 7 + 40/60;
     const LUNCH_HOUR = 1;
-    const TOTAL_DAY_HOURS = WORK_DAY_HOURS + LUNCH_HOUR;
 
     const data = [
-      { name: 'Mitali', country: 'India', offset: 4.5, start: 3, end: 3 + TOTAL_DAY_HOURS },
-      { name: 'Ranjana', country: 'India', offset: 4.5, start: 3 + 41/60, end: 3 + 41/60 + TOTAL_DAY_HOURS },
-      { name: 'Luca', country: 'Ireland', offset: 1, start: 4, end: 4 + TOTAL_DAY_HOURS },
-      { name: 'Aleksandar', country: 'Serbia', offset: 2, start: 5, end: 5 + TOTAL_DAY_HOURS },
-      { name: 'Milena', country: 'Serbia', offset: 2, start: 6, end: 6 + TOTAL_DAY_HOURS },
-      { name: 'Renata', country: 'Portugal', offset: 1, start: 8, end: 8 + TOTAL_DAY_HOURS },
-      { name: 'Juan', country: 'Argentina', offset: -4, start: 11 + 10/60, end: 11 + 10/60 + TOTAL_DAY_HOURS },
-      { name: 'Hannes', country: 'Brazil', offset: -4, start: 12, end: 12 + TOTAL_DAY_HOURS },
-      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + TOTAL_DAY_HOURS },
-      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_DAY_HOURS },
-      { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + TOTAL_DAY_HOURS },
-      { name: 'Marco', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_DAY_HOURS },
-      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 16, end: 16 + TOTAL_DAY_HOURS },
-      { name: 'Everton', country: 'Brazil', offset: -4, start: 18, end: 18 + TOTAL_DAY_HOURS }
+      { name: 'Mitali', country: 'India', offset: 4.5, start: 3, end: 3 + WORK_DAY_HOURS },
+      { name: 'Ranjana', country: 'India', offset: 4.5, start: 3 + 41/60, end: 3 + 41/60 + WORK_DAY_HOURS },
+      { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + WORK_DAY_HOURS },
+      { name: 'Aleksandar', country: 'Serbia', offset: 2, start: 5, end: 5 + WORK_DAY_HOURS },
+      { name: 'Milena', country: 'Serbia', offset: 2, start: 6, end: 6 + WORK_DAY_HOURS },
+      { name: 'Renata', country: 'Portugal', offset: 1, start: 8, end: 8 + WORK_DAY_HOURS },
+      { name: 'Juan', country: 'Argentina', offset: -4, start: 11 + 10/60, end: 11 + 10/60 + WORK_DAY_HOURS },
+      { name: 'Hannes', country: 'Brazil', offset: -4, start: 12, end: 12 + WORK_DAY_HOURS },
+      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + WORK_DAY_HOURS },
+      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + WORK_DAY_HOURS },
+      { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + WORK_DAY_HOURS },
+      { name: 'Marco', country: 'Costa Rica', offset: -6, start: 15, end: 15 + WORK_DAY_HOURS },
+      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + WORK_DAY_HOURS },
+      { name: 'Everton', country: 'Brazil', offset: -4, start: 18, end: 18 + WORK_DAY_HOURS }
     ];
     const technicalTeamMembers = new Set(['Mitali', 'Ranjana', 'Aleksandar', 'Renata', 'Juan', 'Hannes', 'João', 'Marco', 'Everton']);
     const technicalData = data
       .filter(member => technicalTeamMembers.has(member.name))
       .map(member => ({ ...member }));
     const operationsData = [
-      { name: 'Luca', country: 'Ireland', offset: 1, start: 4, end: 4 + TOTAL_DAY_HOURS },
-      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + TOTAL_DAY_HOURS },
-      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_DAY_HOURS },
-      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 16, end: 16 + TOTAL_DAY_HOURS }
+      { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + WORK_DAY_HOURS },
+      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + WORK_DAY_HOURS },
+      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + WORK_DAY_HOURS },
+      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + WORK_DAY_HOURS }
     ];
 
     const STORAGE_KEY = 'teamSchedule';
     const TECHNICAL_STORAGE_KEY = 'technicalTeamSchedule';
     const OPERATIONS_STORAGE_KEY = 'operationsTeamSchedule';
-    const STORAGE_VERSION = 16;
+    const STORAGE_VERSION = 18;
     const daylightSavingCountries = new Set(['Ireland', 'Serbia', 'Portugal']);
 
     function loadTeamData(storageKey = STORAGE_KEY, fallback = data) {
