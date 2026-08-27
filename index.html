@@ -454,8 +454,8 @@
       { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_DAY_HOURS },
       { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + TOTAL_DAY_HOURS },
       { name: 'Marco', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_DAY_HOURS },
-      { name: 'Everton', country: 'Brazil', offset: -4, start: 18, end: 18 + TOTAL_DAY_HOURS },
-      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 19, end: 19 + TOTAL_DAY_HOURS }
+      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 16, end: 16 + TOTAL_DAY_HOURS },
+      { name: 'Everton', country: 'Brazil', offset: -4, start: 18, end: 18 + TOTAL_DAY_HOURS }
     ];
     const technicalTeamMembers = new Set(['Mitali', 'Ranjana', 'Aleksandar', 'Renata', 'Juan', 'Hannes', 'João', 'Marco', 'Everton']);
     const technicalData = data
@@ -465,13 +465,13 @@
       { name: 'Luca', country: 'Ireland', offset: 1, start: 4, end: 4 + TOTAL_DAY_HOURS },
       { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + TOTAL_DAY_HOURS },
       { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_DAY_HOURS },
-      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 19, end: 19 + TOTAL_DAY_HOURS }
+      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 16, end: 16 + TOTAL_DAY_HOURS }
     ];
 
     const STORAGE_KEY = 'teamSchedule';
     const TECHNICAL_STORAGE_KEY = 'technicalTeamSchedule';
     const OPERATIONS_STORAGE_KEY = 'operationsTeamSchedule';
-    const STORAGE_VERSION = 14;
+    const STORAGE_VERSION = 16;
     const daylightSavingCountries = new Set(['Ireland', 'Serbia', 'Portugal']);
 
     function loadTeamData(storageKey = STORAGE_KEY, fallback = data) {
