@@ -18,6 +18,48 @@
       max-width: 1600px;
       margin: 0 auto;
     }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      padding: 0.4rem;
+      width: fit-content;
+      max-width: 100%;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+    }
+    .tab-button {
+      flex: 0 1 auto;
+      padding: 0.7rem 1rem;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.9rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .tab-button:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: white;
+      transform: none;
+    }
+    .tab-button.active {
+      background: white;
+      color: #3730a3;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.14);
+    }
+    .view-label {
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
     h1 {
       margin-bottom: 0.5rem;
       color: #ffffff;
@@ -159,6 +201,19 @@
       font-size: 0.8rem;
       color: #6b7280;
       font-weight: 500;
+    }
+    .member-country {
+      display: inline-block;
+      margin-top: 0.3rem;
+      color: #6b7280;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .member-country.dst-country {
+      padding: 0.18rem 0.4rem;
+      border-radius: 5px;
+      background: #fef08a;
+      color: #713f12;
     }
     .working {
       position: relative;
@@ -329,10 +384,16 @@
 </head>
 <body>
   <div class="container">
+    <nav class="tabs" aria-label="Support team sections">
+      <button class="tab-button active" type="button" data-tab="support" aria-selected="true">Support team</button>
+      <button class="tab-button" type="button" data-tab="technical" aria-selected="false">Technical support team</button>
+      <button class="tab-button" type="button" data-tab="operations" aria-selected="false">Support operations team</button>
+    </nav>
     <div class="hero">
       <div>
-        <h1>🌍 Team Timezone Map</h1>
-        <p>See your team’s time zones in a clean, modern schedule view. Each row shows a member’s local hours and work window, with the current UTC column highlighted.</p>
+        <div class="view-label">Current view</div>
+        <h1 id="viewTitle">Support team</h1>
+        <p id="viewDescription">See your team’s time zones in a clean, modern schedule view. Each row shows a member’s local hours and work window, with the current UTC column highlighted.</p>
       </div>
       <div class="legend">
         <span class="working-indicator"><strong></strong> Working hours</span>
@@ -369,45 +430,100 @@
   </div>
 
   <script>
-    const WORK_DAY_HOURS = 7.7;
+    const WORK_DAY_HOURS = 7 + 40/60;
     const LUNCH_HOUR = 1;
     const TOTAL_DAY_HOURS = WORK_DAY_HOURS + LUNCH_HOUR;
 
     const data = [
-      { name: 'Mitali', offset: 4.5, start: 3, end: 3 + TOTAL_DAY_HOURS },
-      { name: 'Ranjana', offset: 4.5, start: 3 + 41/60, end: 3 + 41/60 + TOTAL_DAY_HOURS },
-      { name: 'Aleksandar', offset: 2, start: 5, end: 5 + TOTAL_DAY_HOURS },
-      { name: 'Renata', offset: 1, start: 8, end: 8 + TOTAL_DAY_HOURS },
-      { name: 'Juan', offset: -4, start: 11 + 10/60, end: 11 + 10/60 + TOTAL_DAY_HOURS },
-      { name: 'Hannes', offset: -4, start: 12, end: 12 + TOTAL_DAY_HOURS },
-      { name: 'João', offset: -4, start: 15, end: 15 + TOTAL_DAY_HOURS },
-      { name: 'Marco', offset: -6, start: 15, end: 15 + TOTAL_DAY_HOURS },
-      { name: 'Everton', offset: -4, start: 18, end: 18 + TOTAL_DAY_HOURS }
+      { name: 'Mitali', country: 'India', offset: 4.5, start: 3, end: 3 + TOTAL_DAY_HOURS },
+      { name: 'Ranjana', country: 'India', offset: 4.5, start: 3 + 41/60, end: 3 + 41/60 + TOTAL_DAY_HOURS },
+      { name: 'Luca', country: 'Ireland', offset: 1, start: 4, end: 4 + TOTAL_DAY_HOURS },
+      { name: 'Aleksandar', country: 'Serbia', offset: 2, start: 5, end: 5 + TOTAL_DAY_HOURS },
+      { name: 'Milena', country: 'Serbia', offset: 2, start: 6, end: 6 + TOTAL_DAY_HOURS },
+      { name: 'Renata', country: 'Portugal', offset: 1, start: 8, end: 8 + TOTAL_DAY_HOURS },
+      { name: 'Juan', country: 'Argentina', offset: -4, start: 11 + 10/60, end: 11 + 10/60 + TOTAL_DAY_HOURS },
+      { name: 'Hannes', country: 'Brazil', offset: -4, start: 12, end: 12 + TOTAL_DAY_HOURS },
+      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + TOTAL_DAY_HOURS },
+      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_DAY_HOURS },
+      { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + TOTAL_DAY_HOURS },
+      { name: 'Marco', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_DAY_HOURS },
+      { name: 'Everton', country: 'Brazil', offset: -4, start: 18, end: 18 + TOTAL_DAY_HOURS },
+      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 19, end: 19 + TOTAL_DAY_HOURS }
+    ];
+    const technicalTeamMembers = new Set(['Mitali', 'Ranjana', 'Aleksandar', 'Renata', 'Juan', 'Hannes', 'João', 'Marco', 'Everton']);
+    const technicalData = data
+      .filter(member => technicalTeamMembers.has(member.name))
+      .map(member => ({ ...member }));
+    const operationsData = [
+      { name: 'Luca', country: 'Ireland', offset: 1, start: 4, end: 4 + TOTAL_DAY_HOURS },
+      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + TOTAL_DAY_HOURS },
+      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_DAY_HOURS },
+      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 19, end: 19 + TOTAL_DAY_HOURS }
     ];
 
     const STORAGE_KEY = 'teamSchedule';
-    const STORAGE_VERSION = 3;
+    const TECHNICAL_STORAGE_KEY = 'technicalTeamSchedule';
+    const OPERATIONS_STORAGE_KEY = 'operationsTeamSchedule';
+    const STORAGE_VERSION = 14;
+    const daylightSavingCountries = new Set(['Ireland', 'Serbia', 'Portugal']);
 
-    function loadTeamData() {
+    function loadTeamData(storageKey = STORAGE_KEY, fallback = data) {
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return data;
+        const raw = localStorage.getItem(storageKey);
+        if (!raw) return fallback;
         const parsed = JSON.parse(raw);
         if (!parsed || parsed.version !== STORAGE_VERSION || !Array.isArray(parsed.members)) {
-          return data;
+          return fallback;
         }
         return parsed.members;
       } catch (error) {
-        return data;
+        return fallback;
       }
     }
 
     function saveTeamData() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: STORAGE_VERSION, members: teamData }));
+      const storageKey = activeTab === 'operations'
+        ? OPERATIONS_STORAGE_KEY
+        : activeTab === 'technical' ? TECHNICAL_STORAGE_KEY : STORAGE_KEY;
+      localStorage.setItem(storageKey, JSON.stringify({ version: STORAGE_VERSION, members: teamData }));
     }
 
     let teamData = loadTeamData();
     let editingIndex = -1;
+    let activeTab = 'support';
+    const viewDetails = {
+      support: {
+        title: 'Support team',
+        description: 'See your team’s time zones in a clean, modern schedule view. Each row shows a member’s local hours and work window, with the current UTC column highlighted.'
+      },
+      technical: {
+        title: 'Technical support team',
+        description: 'Coordinate technical support coverage across the team’s time zones and working hours.'
+      },
+      operations: {
+        title: 'Support operations team',
+        description: 'Coordinate support operations coverage across the team’s time zones and working hours.'
+      }
+    };
+
+    function switchTab(tabName) {
+      const details = viewDetails[tabName] || viewDetails.support;
+      saveTeamData();
+      activeTab = tabName;
+      teamData = activeTab === 'operations'
+        ? loadTeamData(OPERATIONS_STORAGE_KEY, operationsData)
+        : activeTab === 'technical'
+          ? loadTeamData(TECHNICAL_STORAGE_KEY, technicalData)
+          : loadTeamData();
+      document.getElementById('viewTitle').textContent = details.title;
+      document.getElementById('viewDescription').textContent = details.description;
+      document.querySelectorAll('.tab-button').forEach((button) => {
+        const isActive = button.dataset.tab === tabName;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-selected', String(isActive));
+      });
+      render();
+    }
 
     function normalizeHour(hour) {
       return ((hour % 24) + 24) % 24;
@@ -493,6 +609,7 @@
         nameCell.innerHTML = `
           <span class="member-name">${member.name}</span>
           <span class="member-subtitle">UTC${offsetSign} · ${startStr} – ${endStr}</span>
+          <span class="member-country${daylightSavingCountries.has(member.country) ? ' dst-country' : ''}"${daylightSavingCountries.has(member.country) ? ' title="This country observes daylight saving time"' : ''}>${member.country}</span>
         `;
         nameCell.onclick = () => openModal(idx);
         row.appendChild(nameCell);
@@ -580,6 +697,10 @@
       const modal = document.getElementById('modal');
       if (e.target === modal) closeModal();
     };
+
+    document.querySelectorAll('.tab-button').forEach((button) => {
+      button.addEventListener('click', () => switchTab(button.dataset.tab));
+    });
 
     render();
   </script>
