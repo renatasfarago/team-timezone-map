@@ -1,0 +1,7 @@
+{
+  "rewrites": [
+    { "source": "/technical-sup-team", "destination": "/" },
+    { "source": "/support-ops", "destination": "/" },
+    { "source": "/incident-specialists", "destination": "/" }
+  ]
+}

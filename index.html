@@ -394,6 +394,7 @@
       <button class="tab-button active" type="button" data-tab="support" aria-selected="true">Support team</button>
       <button class="tab-button" type="button" data-tab="technical" aria-selected="false">Technical support team</button>
       <button class="tab-button" type="button" data-tab="operations" aria-selected="false">Support operations team</button>
+      <button class="tab-button" type="button" data-tab="incident" aria-selected="false">Incident Specialists</button>
     </nav>
     <div class="hero">
       <div>
@@ -439,38 +440,44 @@
   <script>
     const WORK_DAY_HOURS = 7 + 40/60;
     const LUNCH_HOUR = 1;
+    const TOTAL_SHIFT_HOURS = WORK_DAY_HOURS + LUNCH_HOUR;
 
     const data = [
-      { name: 'Mitali', country: 'India', offset: 4.5, start: 3, end: 3 + WORK_DAY_HOURS },
-      { name: 'Ranjana', country: 'India', offset: 4.5, start: 3 + 41/60, end: 3 + 41/60 + WORK_DAY_HOURS },
-      { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + WORK_DAY_HOURS },
-      { name: 'Aleksandar', country: 'Serbia', offset: 2, start: 5, end: 5 + WORK_DAY_HOURS },
-      { name: 'Milena', country: 'Serbia', offset: 2, start: 6, end: 6 + WORK_DAY_HOURS },
-      { name: 'Renata', country: 'Portugal', offset: 1, start: 8, end: 8 + WORK_DAY_HOURS },
-      { name: 'Juan', country: 'Argentina', offset: -4, start: 11 + 10/60, end: 11 + 10/60 + WORK_DAY_HOURS },
-      { name: 'Hannes', country: 'Brazil', offset: -4, start: 12, end: 12 + WORK_DAY_HOURS },
-      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + WORK_DAY_HOURS },
-      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + WORK_DAY_HOURS },
-      { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + WORK_DAY_HOURS },
-      { name: 'Marco', country: 'Costa Rica', offset: -6, start: 15, end: 15 + WORK_DAY_HOURS },
-      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + WORK_DAY_HOURS },
-      { name: 'Everton', country: 'Brazil', offset: -4, start: 18, end: 18 + WORK_DAY_HOURS }
+      { name: 'Mitali', country: 'India', offset: 4.5, start: 3, end: 3 + TOTAL_SHIFT_HOURS },
+      { name: 'Ranjana', country: 'India', offset: 4.5, start: 3 + 41/60, end: 3 + 41/60 + TOTAL_SHIFT_HOURS },
+      { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + TOTAL_SHIFT_HOURS },
+      { name: 'Aleksandar', country: 'Serbia', offset: 2, start: 5, end: 5 + TOTAL_SHIFT_HOURS },
+      { name: 'Milena', country: 'Serbia', offset: 2, start: 6, end: 6 + TOTAL_SHIFT_HOURS },
+      { name: 'Renata', country: 'Portugal', offset: 1, start: 8, end: 8 + TOTAL_SHIFT_HOURS },
+      { name: 'Juan', country: 'Argentina', offset: -4, start: 11 + 10/60, end: 11 + 10/60 + TOTAL_SHIFT_HOURS },
+      { name: 'Hannes', country: 'Brazil', offset: -4, start: 12, end: 12 + TOTAL_SHIFT_HOURS },
+      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + TOTAL_SHIFT_HOURS },
+      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_SHIFT_HOURS },
+      { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
+      { name: 'Marco', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
+      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
+      { name: 'Everton', country: 'Brazil', offset: -4, start: 18, end: 18 + TOTAL_SHIFT_HOURS }
     ];
     const technicalTeamMembers = new Set(['Mitali', 'Ranjana', 'Aleksandar', 'Renata', 'Juan', 'Hannes', 'João', 'Marco', 'Everton']);
     const technicalData = data
       .filter(member => technicalTeamMembers.has(member.name))
       .map(member => ({ ...member }));
     const operationsData = [
-      { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + WORK_DAY_HOURS },
-      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + WORK_DAY_HOURS },
-      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + WORK_DAY_HOURS },
-      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + WORK_DAY_HOURS }
+      { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + TOTAL_SHIFT_HOURS },
+      { name: 'Fede', country: 'Argentina', offset: -4, start: 12 + 10/60, end: 12 + 10/60 + TOTAL_SHIFT_HOURS },
+      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_SHIFT_HOURS },
+      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_SHIFT_HOURS }
     ];
+    const incidentTeamMembers = new Set(['Mitali', 'Ranjana', 'Aleksandar', 'Juan', 'Cesar', 'João', 'Marco', 'Marci']);
+    const incidentData = data
+      .filter(member => incidentTeamMembers.has(member.name))
+      .map(member => ({ ...member }));
 
     const STORAGE_KEY = 'teamSchedule';
     const TECHNICAL_STORAGE_KEY = 'technicalTeamSchedule';
     const OPERATIONS_STORAGE_KEY = 'operationsTeamSchedule';
-    const STORAGE_VERSION = 18;
+    const INCIDENT_STORAGE_KEY = 'incidentSpecialistsSchedule';
+    const STORAGE_VERSION = 20;
     const daylightSavingCountries = new Set(['Ireland', 'Serbia', 'Portugal']);
 
     function loadTeamData(storageKey = STORAGE_KEY, fallback = data) {
@@ -490,13 +497,24 @@
     function saveTeamData() {
       const storageKey = activeTab === 'operations'
         ? OPERATIONS_STORAGE_KEY
-        : activeTab === 'technical' ? TECHNICAL_STORAGE_KEY : STORAGE_KEY;
+        : activeTab === 'technical'
+          ? TECHNICAL_STORAGE_KEY
+          : activeTab === 'incident'
+            ? INCIDENT_STORAGE_KEY
+            : STORAGE_KEY;
       localStorage.setItem(storageKey, JSON.stringify({ version: STORAGE_VERSION, members: teamData }));
     }
 
     let teamData = loadTeamData();
     let editingIndex = -1;
     let activeTab = 'support';
+    const routeByTab = {
+      support: '/',
+      technical: '/technical-sup-team',
+      operations: '/support-ops',
+      incident: '/incident-specialists'
+    };
+
     const viewDetails = {
       support: {
         title: 'Support team',
@@ -509,8 +527,28 @@
       operations: {
         title: 'Support operations team',
         description: 'Coordinate support operations coverage across the team’s time zones and working hours.'
+      },
+      incident: {
+        title: 'Incident Specialists',
+        description: 'Monitor incident specialist coverage across critical response hours and time zones.'
       }
     };
+
+    function getTabFromPath(currentPath) {
+      const normalizedPath = (currentPath || '/').replace(/\/+$/, '') || '/';
+      if (normalizedPath === '/technical-sup-team') return 'technical';
+      if (normalizedPath === '/support-ops') return 'operations';
+      if (normalizedPath === '/incident-specialists') return 'incident';
+      return 'support';
+    }
+
+    function updateRoute(tabName) {
+      const nextPath = routeByTab[tabName] || '/';
+      const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
+      if (currentPath !== nextPath) {
+        window.history.pushState({ tab: tabName }, '', nextPath);
+      }
+    }
 
     function switchTab(tabName) {
       const details = viewDetails[tabName] || viewDetails.support;
@@ -520,7 +558,10 @@
         ? loadTeamData(OPERATIONS_STORAGE_KEY, operationsData)
         : activeTab === 'technical'
           ? loadTeamData(TECHNICAL_STORAGE_KEY, technicalData)
-          : loadTeamData();
+          : activeTab === 'incident'
+            ? loadTeamData(INCIDENT_STORAGE_KEY, incidentData)
+            : loadTeamData();
+      updateRoute(tabName);
       document.getElementById('viewTitle').textContent = details.title;
       document.getElementById('viewDescription').textContent = details.description;
       document.querySelectorAll('.tab-button').forEach((button) => {
@@ -708,7 +749,11 @@
       button.addEventListener('click', () => switchTab(button.dataset.tab));
     });
 
-    render();
+    window.addEventListener('popstate', () => {
+      switchTab(getTabFromPath(window.location.pathname));
+    });
+
+    switchTab(getTabFromPath(window.location.pathname));
   </script>
 </body>
 </html>
