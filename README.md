@@ -68,6 +68,35 @@ These countries are highlighted in yellow in the interface, with a tooltip expla
 4. Changes are saved automatically in the browser for the selected team view.
 5. Green cells represent working hours; orange cells represent lunch.
 
+## How to Run Locally
+
+This is a standalone static website, so no installation or build step is required.
+
+### Option 1: Open the file directly
+
+Double-click `index.html`, or open it in your browser from the file system.
+
+### Option 2: Use a local HTTP server
+
+From the project directory, run:
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open [http://localhost:8000](http://localhost:8000) in your browser. Stop the server with `Ctrl+C`.
+
+### Option 3: Run with Vercel
+
+Install the Vercel CLI if it is not already installed, then run the project from its directory:
+
+```bash
+npm install --global vercel
+vercel dev
+```
+
+Open the local URL shown in the terminal.
+
 ## Technical Notes
 
 - The project is a standalone HTML file with inline CSS and JavaScript.
