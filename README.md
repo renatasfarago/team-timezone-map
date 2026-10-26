@@ -47,6 +47,7 @@ The current local schedules include:
 
 - Luca: 04:00-11:40 (Ireland, UTC+1)
 - Fede: 08:10-16:50 (Argentina, UTC-4)
+- Hannes: 08:00-16:40 (Brazil, UTC-4)
 - Cesar: 07:00-15:40 (Costa Rica, UTC-6)
 - Marci: 09:00-16:40 (Costa Rica, UTC-6)
 

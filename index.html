@@ -450,9 +450,8 @@
       { name: 'Milena', country: 'Serbia', offset: 2, start: 6, end: 6 + TOTAL_SHIFT_HOURS },
       { name: 'Renata', country: 'Portugal', offset: 1, start: 8, end: 8 + TOTAL_SHIFT_HOURS },
       { name: 'Everton', country: 'Brazil', offset: -4, start: 11, end: 19 + 40/60 },
-      { name: 'Juan', country: 'Argentina', offset: -4, start: 11 + 10/60, end: 11 + 10/60 + TOTAL_SHIFT_HOURS },
       { name: 'Fede', country: 'Argentina', offset: -4, start: 13, end: 21 },
-      { name: 'Hannes', country: 'Brazil', offset: -4, start: 13, end: 21 + 40/60 },
+      { name: 'Hannes', country: 'Brazil', offset: -4, start: 12, end: 20 + 40/60 },
       { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_SHIFT_HOURS },
       { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
       { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
@@ -488,7 +487,15 @@
         if (!parsed || parsed.version !== STORAGE_VERSION || !Array.isArray(parsed.members)) {
           return fallback;
         }
-        return parsed.members;
+        const fallbackMembers = new Map(fallback.map(member => [member.name, member]));
+        return parsed.members
+          .filter(member => fallbackMembers.has(member.name))
+          .map(member => {
+            const defaultMember = fallbackMembers.get(member.name);
+            return member.name === 'Hannes' && defaultMember
+              ? { ...member, start: defaultMember.start, end: defaultMember.end }
+              : member;
+          });
       } catch (error) {
         return fallback;
       }
@@ -570,6 +577,13 @@
         button.setAttribute('aria-selected', String(isActive));
       });
       render();
+    }
+
+    function getDisplayedMemberName(member) {
+      if (activeTab !== 'support') return member.name;
+      if (member.name === 'Fede') return 'Hannes';
+      if (member.name === 'Hannes') return 'Fede';
+      return member.name;
     }
 
     function normalizeHour(hour) {
@@ -654,7 +668,7 @@
         const offsetSign = member.offset >= 0 ? `+${member.offset}` : member.offset;
 
         nameCell.innerHTML = `
-          <span class="member-name">${member.name}</span>
+          <span class="member-name">${getDisplayedMemberName(member)}</span>
           <span class="member-subtitle">UTC${offsetSign} · ${startStr} – ${endStr}</span>
           <span class="member-country${daylightSavingCountries.has(member.country) ? ' dst-country' : ''}"${daylightSavingCountries.has(member.country) ? ' title="This country observes daylight saving time"' : ''}>${member.country}</span>
         `;
@@ -716,7 +730,7 @@
     function openModal(idx) {
       editingIndex = idx;
       const member = teamData[idx];
-      document.getElementById('modalName').textContent = member.name;
+      document.getElementById('modalName').textContent = getDisplayedMemberName(member);
       document.getElementById('editStart').value = member.start;
       document.getElementById('editEnd').value = member.end;
       document.getElementById('modal').classList.add('active');
