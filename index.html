@@ -450,8 +450,8 @@
       { name: 'Milena', country: 'Serbia', offset: 2, start: 6, end: 6 + TOTAL_SHIFT_HOURS },
       { name: 'Renata', country: 'Portugal', offset: 1, start: 8, end: 8 + TOTAL_SHIFT_HOURS },
       { name: 'Everton', country: 'Brazil', offset: -4, start: 11, end: 19 + 40/60 },
-      { name: 'Fede', country: 'Argentina', offset: -4, start: 13, end: 21 },
       { name: 'Hannes', country: 'Brazil', offset: -4, start: 12, end: 20 + 40/60 },
+      { name: 'Fede', country: 'Argentina', offset: -4, start: 13, end: 21 + 40/60 },
       { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_SHIFT_HOURS },
       { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
       { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
@@ -463,7 +463,7 @@
       .map(member => ({ ...member }));
     const operationsData = [
       { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + TOTAL_SHIFT_HOURS },
-      { name: 'Fede', country: 'Argentina', offset: -4, start: 13, end: 21 },
+      { name: 'Fede', country: 'Argentina', offset: -4, start: 13, end: 21 + 40/60 },
       { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_SHIFT_HOURS },
       { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_SHIFT_HOURS }
     ];
@@ -495,7 +495,8 @@
             return member.name === 'Hannes' && defaultMember
               ? { ...member, start: defaultMember.start, end: defaultMember.end }
               : member;
-          });
+          })
+          .sort((a, b) => a.start - b.start || a.name.localeCompare(b.name));
       } catch (error) {
         return fallback;
       }
@@ -581,8 +582,6 @@
 
     function getDisplayedMemberName(member) {
       if (activeTab !== 'support') return member.name;
-      if (member.name === 'Fede') return 'Hannes';
-      if (member.name === 'Hannes') return 'Fede';
       return member.name;
     }
 
