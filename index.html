@@ -443,29 +443,29 @@
     const TOTAL_SHIFT_HOURS = WORK_DAY_HOURS + LUNCH_HOUR;
 
     const data = [
-      { name: 'Mitali', country: 'India', offset: 4.5, start: 3, end: 3 + TOTAL_SHIFT_HOURS },
-      { name: 'Ranjana', country: 'India', offset: 4.5, start: 3 + 41/60, end: 3 + 41/60 + TOTAL_SHIFT_HOURS },
-      { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + TOTAL_SHIFT_HOURS },
-      { name: 'Aleksandar', country: 'Serbia', offset: 2, start: 5, end: 5 + TOTAL_SHIFT_HOURS },
-      { name: 'Milena', country: 'Serbia', offset: 2, start: 6, end: 6 + TOTAL_SHIFT_HOURS },
-      { name: 'Renata', country: 'Portugal', offset: 1, start: 8, end: 8 + TOTAL_SHIFT_HOURS },
-      { name: 'Everton', country: 'Brazil', offset: -4, start: 11, end: 19 + 40/60 },
-      { name: 'Hannes', country: 'Brazil', offset: -4, start: 12, end: 20 + 40/60 },
-      { name: 'Fede', country: 'Argentina', offset: -4, start: 13, end: 21 + 40/60 },
-      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_SHIFT_HOURS },
-      { name: 'João', country: 'Brazil', offset: -4, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
-      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_SHIFT_HOURS },
-      { name: 'Marco', country: 'Costa Rica', offset: -6, start: 18, end: 2 + 40/60 }
+      { name: 'Mitali', country: 'India', timeZone: 'Asia/Kolkata', start: 2, end: 2 + TOTAL_SHIFT_HOURS },
+      { name: 'Ranjana', country: 'India', timeZone: 'Asia/Kolkata', start: 2 + 41/60, end: 2 + 41/60 + TOTAL_SHIFT_HOURS },
+      { name: 'Luca', country: 'Ireland', timeZone: 'Europe/Dublin', start: 4, end: 4 + TOTAL_SHIFT_HOURS },
+      { name: 'Aleksandar', country: 'Serbia', timeZone: 'Europe/Belgrade', start: 6, end: 6 + TOTAL_SHIFT_HOURS },
+      { name: 'Milena', country: 'Serbia', timeZone: 'Europe/Belgrade', start: 7, end: 7 + TOTAL_SHIFT_HOURS },
+      { name: 'Renata', country: 'Portugal', timeZone: 'Europe/Lisbon', start: 9, end: 9 + TOTAL_SHIFT_HOURS },
+      { name: 'Everton', country: 'Brazil', timeZone: 'America/Sao_Paulo', start: 10, end: 18 + 40/60 },
+      { name: 'Hannes', country: 'Brazil', timeZone: 'America/Sao_Paulo', start: 12, end: 20 + 40/60 },
+      { name: 'Fede', country: 'Argentina', timeZone: 'America/Argentina/Buenos_Aires', start: 12, end: 20 + 40/60 },
+      { name: 'Cesar', country: 'Costa Rica', timeZone: 'America/Costa_Rica', start: 13, end: 13 + TOTAL_SHIFT_HOURS },
+      { name: 'João', country: 'Brazil', timeZone: 'America/Sao_Paulo', start: 14, end: 14 + TOTAL_SHIFT_HOURS },
+      { name: 'Marci', country: 'Costa Rica', timeZone: 'America/Costa_Rica', start: 15, end: 15 + TOTAL_SHIFT_HOURS },
+      { name: 'Marco', country: 'Costa Rica', timeZone: 'America/Costa_Rica', start: 18, end: 2 + 40/60 }
     ];
     const technicalTeamMembers = new Set(['Mitali', 'Ranjana', 'Aleksandar', 'Renata', 'Juan', 'Hannes', 'João', 'Marco', 'Everton']);
     const technicalData = data
       .filter(member => technicalTeamMembers.has(member.name))
       .map(member => ({ ...member }));
     const operationsData = [
-      { name: 'Luca', country: 'Ireland', offset: 1, start: 3, end: 3 + TOTAL_SHIFT_HOURS },
-      { name: 'Fede', country: 'Argentina', offset: -4, start: 13, end: 21 + 40/60 },
-      { name: 'Cesar', country: 'Costa Rica', offset: -6, start: 13, end: 13 + TOTAL_SHIFT_HOURS },
-      { name: 'Marci', country: 'Costa Rica', offset: -6, start: 15, end: 15 + TOTAL_SHIFT_HOURS }
+      { name: 'Luca', country: 'Ireland', timeZone: 'Europe/Dublin', start: 4, end: 4 + TOTAL_SHIFT_HOURS },
+      { name: 'Fede', country: 'Argentina', timeZone: 'America/Argentina/Buenos_Aires', start: 12, end: 20 + 40/60 },
+      { name: 'Cesar', country: 'Costa Rica', timeZone: 'America/Costa_Rica', start: 13, end: 13 + TOTAL_SHIFT_HOURS },
+      { name: 'Marci', country: 'Costa Rica', timeZone: 'America/Costa_Rica', start: 15, end: 15 + TOTAL_SHIFT_HOURS }
     ];
     const incidentTeamMembers = new Set(['Mitali', 'Ranjana', 'Aleksandar', 'Juan', 'Cesar', 'João', 'Marco', 'Marci']);
     const incidentData = data
@@ -478,6 +478,17 @@
     const INCIDENT_STORAGE_KEY = 'incidentSpecialistsSchedule';
     const STORAGE_VERSION = 27;
     const daylightSavingCountries = new Set(['Ireland', 'Serbia', 'Portugal']);
+    const previousDefaultSchedules = new Map([
+      ['Mitali', [3, 3 + TOTAL_SHIFT_HOURS]],
+      ['Ranjana', [3 + 41/60, 3 + 41/60 + TOTAL_SHIFT_HOURS]],
+      ['Luca', [3, 3 + TOTAL_SHIFT_HOURS]],
+      ['Aleksandar', [5, 5 + TOTAL_SHIFT_HOURS]],
+      ['Milena', [6, 6 + TOTAL_SHIFT_HOURS]],
+      ['Renata', [8, 8 + TOTAL_SHIFT_HOURS]],
+      ['Everton', [11, 19 + 40/60]],
+      ['Fede', [13, 21 + 40/60]],
+      ['João', [15, 15 + TOTAL_SHIFT_HOURS]]
+    ]);
 
     function loadTeamData(storageKey = STORAGE_KEY, fallback = data) {
       try {
@@ -492,9 +503,14 @@
           .filter(member => fallbackMembers.has(member.name))
           .map(member => {
             const defaultMember = fallbackMembers.get(member.name);
-            return member.name === 'Hannes' && defaultMember
-              ? { ...member, start: defaultMember.start, end: defaultMember.end }
-              : member;
+            const mergedMember = { ...defaultMember, ...member, timeZone: defaultMember.timeZone };
+            const previousSchedule = previousDefaultSchedules.get(member.name);
+            const hasPreviousDefaultSchedule = previousSchedule
+              && Math.abs(member.start - previousSchedule[0]) < 1e-8
+              && Math.abs(member.end - previousSchedule[1]) < 1e-8;
+            return member.name === 'Hannes' || hasPreviousDefaultSchedule
+              ? { ...mergedMember, start: defaultMember.start, end: defaultMember.end }
+              : mergedMember;
           })
           .sort((a, b) => a.start - b.start || a.name.localeCompare(b.name));
       } catch (error) {
@@ -598,6 +614,26 @@
       return `${displayHour.toString().padStart(2, '0')}:${displayMinutes.toString().padStart(2, '0')}`;
     }
 
+    function getUtcOffset(timeZone, date = new Date()) {
+      const offset = new Intl.DateTimeFormat('en', {
+        timeZone,
+        timeZoneName: 'longOffset'
+      }).formatToParts(date).find(part => part.type === 'timeZoneName')?.value;
+      const match = offset && offset.match(/^GMT(?:([+-])(\d{2}):(\d{2}))?$/);
+      if (!match) throw new Error(`Unable to determine UTC offset for ${timeZone}`);
+      if (!match[1]) return 0;
+      const sign = match[1] === '+' ? 1 : -1;
+      return sign * (Number(match[2]) + Number(match[3]) / 60);
+    }
+
+    function formatUtcOffset(offset) {
+      const totalMinutes = Math.round(Math.abs(offset) * 60);
+      const hours = Math.floor(totalMinutes / 60).toString().padStart(2, '0');
+      const minutes = (totalMinutes % 60).toString().padStart(2, '0');
+      const sign = offset >= 0 ? '+' : '-';
+      return `UTC${sign}${hours}:${minutes}`;
+    }
+
     function getHourOverlap(member, hour) {
       const slotStart = hour;
       const slotEnd = hour + 1;
@@ -660,15 +696,16 @@
         const row = document.createElement('tr');
 
         const nameCell = document.createElement('td');
-        const startLocal = normalizeHour(member.start + member.offset);
-        const endLocal = normalizeHour(member.end + member.offset);
+        const offset = getUtcOffset(member.timeZone);
+        const startLocal = normalizeHour(member.start + offset);
+        const endLocal = normalizeHour(member.end + offset);
         const startStr = formatHour(startLocal);
         const endStr = formatHour(endLocal);
-        const offsetSign = member.offset >= 0 ? `+${member.offset}` : member.offset;
+        const formattedOffset = formatUtcOffset(offset);
 
         nameCell.innerHTML = `
           <span class="member-name">${getDisplayedMemberName(member)}</span>
-          <span class="member-subtitle">UTC${offsetSign} · ${startStr} – ${endStr}</span>
+          <span class="member-subtitle">${formattedOffset} · ${startStr} – ${endStr}</span>
           <span class="member-country${daylightSavingCountries.has(member.country) ? ' dst-country' : ''}"${daylightSavingCountries.has(member.country) ? ' title="This country observes daylight saving time"' : ''}>${member.country}</span>
         `;
         nameCell.onclick = () => openModal(idx);
@@ -679,7 +716,7 @@
 
         for (let h = 0; h < 24; h++) {
           const cell = document.createElement('td');
-          const slotStart = h + member.offset;
+          const slotStart = h + offset;
           const localHour = normalizeHour(slotStart);
           const overlap = getHourOverlap({ start: startLocal, end: endLocal }, localHour);
           const isWorking = overlap > 0;
